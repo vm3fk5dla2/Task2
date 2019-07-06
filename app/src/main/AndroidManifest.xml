@@ -16,6 +16,7 @@
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_madcamp_round"
     android:supportsRtl="true"
+    android:usesCleartextTraffic="true"
     android:theme="@style/AppTheme">
     <meta-data
       android:name="com.naver.maps.map.CLIENT_ID"
@@ -32,7 +33,6 @@
       </intent-filter>
     </activity>
     <activity android:name=".ui.main.Tab3.TimeTableActivity"></activity>
-    <activity android:name=".ui.main.Tab2.ImageActivity"></activity>
   </application>
 
 </manifest>
