@@ -66,13 +66,12 @@ public class ImageAdapter extends BaseAdapter {
 
         // JSON Parser
         JsonObject object = (JsonObject) jsonArray.get(position);
-        JsonObject firstParse = (JsonObject) object.get("img");
-        String secondParse = firstParse.get("data").toString();
+        String parse = object.get("imgdata").toString();
 
         BitmapFactory.Options bo = new BitmapFactory.Options();
         bo.inSampleSize = 8;
 
-        byte[] decodedString = Base64.decode(secondParse, Base64.DEFAULT);
+        byte[] decodedString = Base64.decode(parse, Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         Bitmap resized = Bitmap.createScaledBitmap(bmp, 80, 80, true);
 

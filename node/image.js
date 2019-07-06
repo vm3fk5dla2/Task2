@@ -11,11 +11,9 @@ db.once('open', function callback () {
 });
 
 var imgSchema = mongoose.Schema({
-    name: { type: String, default: 'untitled.jpg' },
-    img: {
-        data: String,
-        contentType: String
-    }
+    name: String,
+    imgdata: String,
+    imgtype: String
 });
 
 var imageSchema = mongoose.model('image', imgSchema);

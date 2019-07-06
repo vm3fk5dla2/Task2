@@ -23,7 +23,7 @@ router.get('/imgupload', function (req, res, next) {
 
 router.get('/img/:filename', function (req, res, next) {
     Image.findOne({ name: req.params.filename }).then(function (image) {
-        res.send(image.img.data);
+        res.send(image.imgdata)
     })
 })
 
@@ -38,8 +38,8 @@ router.post('/imgpost', upload.single('img'), function (req, res, next) {
     console.log(req.file)
     var newImage = new Image()
     newImage.name = req.file.originalname
-    newImage.img.data = fs.readFileSync(req.file.path).toString('base64')
-    newImage.img.contentType = req.file.mimetype
+    newImage.imgdata = fs.readFileSync(req.file.path).toString('base64')
+    newImage.imgtype = req.file.mimetype
     newImage.save()
     res.redirect(303, '/')
 })

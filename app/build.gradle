@@ -34,4 +34,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.naver.maps:map-sdk:3.4.0'
     implementation 'com.android.support:design:29.0.0'
+    implementation 'com.koushikdutta.ion:ion:2.+'
 }
