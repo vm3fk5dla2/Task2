@@ -8,19 +8,24 @@
         android:id="@+id/cv_item_movie_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="#000000"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="0dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="0dp">
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
 
         <EditText
             android:id="@+id/call"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:ems="0"
-            android:text="callNum"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+            android:text="callNum" />
+
+        <View
+            android:layout_width="280dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="99dp"
+            android:layout_gravity="right"
+            android:background="#2F7E55DF" />
 
         <Button
             android:id="@+id/callBtn"
@@ -36,19 +41,18 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical"
             android:contentDescription="@string/todo"
             android:scaleType="centerCrop"
             android:src="@drawable/profile"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp" />
+            app:civ_border_color="#2F7E55DF"
+            app:civ_border_width="1dp" />
 
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="190dp"
-            android:layout_marginBottom="9dp"
             android:alpha="1"
             android:orientation="vertical"
             android:paddingTop="8dp"
@@ -61,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="@string/name"
-                android:textColor="@android:color/white"
+                android:textColor="#715CA8"
                 android:textSize="12dp" />
 
             <TextView
@@ -70,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="phone_number"
-                android:textColor="@android:color/white"
+                android:textColor="#715CA8"
                 android:textSize="12dp" />
 
             <TextView
@@ -78,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="address"
-                android:textColor="@android:color/white"
+                android:textColor="#715CA8"
                 android:textSize="12dp" />
 
         </LinearLayout>

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class LocationData {
 
+
   public ArrayList<LatLng> stationLocList = new ArrayList<LatLng>();
   public ArrayList<String> stationNameList = new ArrayList<String>();
   public ArrayList<LatLng> pathLocList = new ArrayList<LatLng>();
