@@ -8,7 +8,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/buttonGreen"
-      android:text="GREEN" />
+      android:text="Upload All" />
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/buttonRed"
+      android:text="Update" />
   <GridView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

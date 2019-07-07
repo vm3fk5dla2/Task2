@@ -9,4 +9,5 @@
   <string name="todo">TODO</string>
   <string name="btitle">Btitle</string>
   <string name="fragment1">Fragment1</string>
+  <string name="tag">Tag</string>
 </resources>

@@ -54,11 +54,7 @@ import static com.example.task1.MainActivity.getContextOfApplication;
 public class Fragment2 extends Fragment {
 
   GridView gridViewImages;
-
   Context mContext;
-
-  private ArrayList<String> thumbsDataList;
-  private ArrayList<String> thumbsIDList;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -69,14 +65,22 @@ public class Fragment2 extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.layout_fragment2, container, false);
-    new JSONTask().execute("http://143.248.36.217:3800/post");//AsyncTask 시작시킴
+    new JSONTask_get().execute("http://143.248.36.217:3800/post");
     gridViewImages = (GridView) view.findViewById(R.id.gridViewImages);
 
-    Button button = (Button) view.findViewById(R.id.buttonGreen) ;
+    Button button = (Button) view.findViewById(R.id.buttonGreen);
     button.setOnClickListener(new Button.OnClickListener() {
       @Override
       public void onClick(View view) {
         new JSONTask_send().upload();
+      }
+    });
+
+    Button button2 = (Button) view.findViewById(R.id.buttonRed);
+    button2.setOnClickListener(new Button.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        new JSONTask_get().execute("http://143.248.36.217:3800/post");
       }
     });
 
@@ -143,7 +147,9 @@ public class Fragment2 extends Fragment {
     }
 
   }
-  public class JSONTask extends AsyncTask<String, String, String> {
+
+
+  public class JSONTask_get extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... urls) {
@@ -151,7 +157,7 @@ public class Fragment2 extends Fragment {
         HttpURLConnection con = null;
         BufferedReader reader = null;
 
-        try{
+        try {
           URL url = new URL(urls[0]);
           con = (HttpURLConnection) url.openConnection();
 
@@ -172,24 +178,24 @@ public class Fragment2 extends Fragment {
           StringBuffer buffer = new StringBuffer();
 
           String line = "";
-          while((line = reader.readLine()) != null){
+          while ((line = reader.readLine()) != null) {
             buffer.append(line);
           }
 
           return buffer.toString();
 
-        } catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
           e.printStackTrace();
         } catch (IOException e) {
           e.printStackTrace();
         } catch (Exception e) {
           e.printStackTrace();
         } finally {
-          if(con != null){
+          if (con != null) {
             con.disconnect();
           }
           try {
-            if(reader != null){
+            if (reader != null) {
               reader.close();//버퍼를 닫아줌
             }
           } catch (IOException e) {

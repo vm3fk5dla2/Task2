@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_movie_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
+
+
+        <View
+            android:layout_width="280dp"
+            android:layout_height="1dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="99dp"
+            android:background="#2F7E55DF" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/list_item_picture"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/todo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile"
+            app:civ_border_color="#2F7E55DF"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/recipe_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/name"
+            android:textColor="#715CA8"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/recipe_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="70dp"
+            android:text="@string/tag"
+            android:textColor="#715CA8"
+            android:textSize="12dp" />
+
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
