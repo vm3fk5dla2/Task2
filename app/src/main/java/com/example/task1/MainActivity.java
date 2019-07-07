@@ -37,5 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabs = findViewById(R.id.tabs);
     tabs.setupWithViewPager(viewPager);
 
+    Intent intent = new Intent(this, LoginActivity.class);
+    startActivity(intent);
   }
 }

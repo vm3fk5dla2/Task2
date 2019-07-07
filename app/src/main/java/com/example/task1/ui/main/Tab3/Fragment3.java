@@ -52,7 +52,6 @@ public class Fragment3 extends Fragment implements TextWatcher {
         tags.add("#DDD");
         tags.add("#EEE");
         tags.add("#FFF");
-        tags.add("#GGG");
 
 
         adapter = new RecipeAdapter(getContextOfApplication(), tags);

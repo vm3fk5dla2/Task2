@@ -34,7 +34,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private ArrayList<String> unfiltered_list = new ArrayList<>();
     private Context mContext;
 
-
     public RecipeAdapter(Context context, ArrayList<String> list) {
         this.mContext = context;
         this.unfiltered_list = list;
@@ -47,7 +46,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_recipe, parent, false);
-
 
         return new RecipeAdapter.ViewHolder(itemView);
     }
