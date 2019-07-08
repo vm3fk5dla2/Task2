@@ -20,17 +20,10 @@ var imageSchema = mongoose.model('image', imgSchema);
 
 var imageList;
 
-imageSchema.find(function(error, images){
-    console.log('--- Read all ---');
-    if(error){
-        console.log(error);
-    }else{
-        console.log(images);
-        imageList = images;
-    }
-});
-
 app.post('/post', (req, res) => {
+    imageSchema.find(function(error, images){
+        imageList = images;
+    });
     res.json(imageList);
 });
 
