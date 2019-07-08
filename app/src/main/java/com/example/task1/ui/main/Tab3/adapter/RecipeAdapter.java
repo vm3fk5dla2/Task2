@@ -3,11 +3,15 @@ package com.example.task1.ui.main.Tab3.adapter;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.task1.R;
 import com.example.task1.ui.main.Tab3.model.RecipeList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> implements Filterable {
 
@@ -33,6 +46,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private ArrayList<String> filtered_list = new ArrayList<>();
     private ArrayList<String> unfiltered_list = new ArrayList<>();
     private Context mContext;
+    RecipeList recipe;
+    Bitmap bitmap;
 
     public RecipeAdapter(Context context, ArrayList<String> list) {
         this.mContext = context;
@@ -42,86 +57,47 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @NonNull
     @Override
-    public RecipeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
 
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe, parent, false);
-
-        return new RecipeAdapter.ViewHolder(itemView);
+        return new ViewHolder(itemView);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecipeAdapter.ViewHolder viewHolder, int position) {
+    ViewHolder viewHolder_cur;
 
-        RecipeList recipe = recipes.get(position);
-//        Bitmap bm = loadContactPhoto(mContext.getContentResolver(), recipe.getPersonId(),
-//                recipe.getThumnailld());
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+
+        recipe = recipes.get(position);
 
         viewHolder.Name.setText(recipe.getName());
         viewHolder.Tag.setText(filtered_list.get(position));
-//        if (mContext.getContentResolver() != null && bm != null) {
-//            viewHolder.Picture.setImageBitmap(bm);
-//        }
+
+        final String recipe_name = recipe.getName();
+        final String recipe_tags = filtered_list.get(position);
+        final String recipe_data = recipe.getData();
+
+        viewHolder.Name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, RecipeActivity.class);
+                intent.putExtra("name", recipe_name);
+                intent.putExtra("tags", recipe_tags);
+                intent.putExtra("data", recipe_data);
+                mContext.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
-    public int getItemCount() { return filtered_list.size(); }
-
-
-    public Bitmap loadContactPhoto(ContentResolver cr, long id, long photo_id) {
-
-        byte[] photoBytes = null;
-        Uri photoUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photo_id);
-        Cursor c = cr
-                .query(photoUri, new String[]{ContactsContract.CommonDataKinds.Photo.PHOTO}, null, null,
-                        null);
-
-        try {
-            if (c.moveToFirst()) {
-                photoBytes = c.getBlob(0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            c.close();
-        }
-
-        if (photoBytes != null) {
-            return resizingBitmap(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length));
-        }
-
-        return null;
+    public int getItemCount() {
+        return filtered_list.size();
     }
 
-    public Bitmap resizingBitmap(Bitmap oBitmap) {
-        if (oBitmap == null) {
-            return null;
-        }
-
-        float width = oBitmap.getWidth();
-        float height = oBitmap.getHeight();
-        float resizing_size = 120;
-
-        Bitmap rBitmap = null;
-        if (width > resizing_size) {
-            float mWidth = (float) (width / 100);
-            float fScale = (float) (resizing_size / mWidth);
-            width *= (fScale / 100);
-            height *= (fScale / 100);
-
-        } else if (height > resizing_size) {
-            float mHeight = (float) (height / 100);
-            float fScale = (float) (resizing_size / mHeight);
-
-            width *= (fScale / 100);
-            height *= (fScale / 100);
-        }
-
-        rBitmap = Bitmap.createScaledBitmap(oBitmap, (int) width, (int) height, true);
-        return rBitmap;
+    public void setRecipes(ArrayList<RecipeList> recipes) {
+        this.recipes = recipes;
     }
-
-    public void setRecipes(ArrayList<RecipeList> recipes) { this.recipes = recipes; }
 
     @Override
     public Filter getFilter() {
@@ -129,12 +105,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
-                if(charString.isEmpty()) {
+                if (charString.isEmpty()) {
                     filtered_list = unfiltered_list;
                 } else {
                     ArrayList<String> filteringList = new ArrayList<>();
-                    for(String name : unfiltered_list) {
-                        if(name.toLowerCase().contains(charString.toLowerCase())) {
+                    for (String name : unfiltered_list) {
+                        if (name.toLowerCase().contains(charString.toLowerCase())) {
                             filteringList.add(name);
                         }
                     }
@@ -147,7 +123,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filtered_list = (ArrayList<String>)results.values;
+                filtered_list = (ArrayList<String>) results.values;
                 notifyDataSetChanged();
             }
         };
@@ -156,17 +132,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView Picture;
         TextView Name, Tag;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            Picture = itemView.findViewById(R.id.list_item_picture);
-
             Name = itemView.findViewById(R.id.recipe_name);
             Tag = itemView.findViewById(R.id.recipe_tag);
-
         }
     }
 }

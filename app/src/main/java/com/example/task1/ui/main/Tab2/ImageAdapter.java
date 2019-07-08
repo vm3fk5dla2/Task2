@@ -36,10 +36,6 @@ public class ImageAdapter extends BaseAdapter {
         return image_num;
     }
 
-    public boolean deleteSelected(int sIndex) {
-        return true;
-    }
-
     @Override
     public Object getItem(int arg0) {
         return arg0;
